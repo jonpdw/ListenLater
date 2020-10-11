@@ -2,7 +2,7 @@
 archive/
 cookies/ 
 UserDetails.json
-
+.git.bfg-report/
 
 # globs
 Makefile.in
