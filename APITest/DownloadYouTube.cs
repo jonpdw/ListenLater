@@ -38,7 +38,7 @@ namespace APITest {
 
             var ytdl = new YoutubeDL();
             // set the path of the youtube-dl and FFmpeg if they're not in PATH or current directory
-            ytdl.YoutubeDLPath = "youtube-dl";
+            ytdl.YoutubeDLPath = "youtube-dl-linux";
             // ytdl.FFmpegPath = "/usr/local/bin/ffmpeg";
 
             var watchLaterVideos = await ytdl.RunWithOptions(
