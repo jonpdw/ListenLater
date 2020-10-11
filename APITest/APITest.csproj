@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveSharp" Version="1.6.12" />
     <PackageReference Include="YoutubeDLSharp" Version="0.2.1" />
   </ItemGroup>
 
@@ -14,7 +15,7 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="youtube-dl">
+    <None Update="youtube-dl-linux">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="archive\jonathan.txt">
