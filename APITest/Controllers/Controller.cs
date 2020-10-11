@@ -27,7 +27,7 @@ namespace APITest.Controllers {
 
         [Route("{username}")]
         public string Get(string username) {
-            _logger.LogInformation("---Get Request---");
+            _logger.LogInformation("---Get Request---!");
 
             var userDetailsText = System.IO.File.ReadAllText("UserDetails.json");
             var userDet =

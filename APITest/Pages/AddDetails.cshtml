@@ -1,0 +1,33 @@
+@page
+@model APITest.Pages.AddDetails
+
+@{
+    ViewData["Title"] = "Add Details";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+      <form method="post">
+           <label >Username: </label><br>
+           <input type="text" asp-for="username" placeholder="John Doe" required/><br><br>
+           <label >Overcast Username:</label><br>
+           <input type="text" asp-for="overcast_username" placeholder="example@gmail.com" required/><br><br>
+           <label >Overcast Password: </label><br>
+           <input type="text" asp-for="overcast_username" placeholder="password123" required/><br><br>
+           <label >Youtube Cookies: </label><br>
+           <textarea cols="40" rows="20" asp-for="youtube_cookies" required></textarea><br><br>
+           <label >Pushover Token</label><br>
+           <input type="text" asp-for="pushover_token" placeholder="" required/><br><br>
+           <label >Pushover User</label><br>
+           <input type="text" asp-for="pushover_user" placeholder="" required/><br><br>
+           <button type="submit">Submit</button>
+       </form>
+</div>
+</body>
+</html>
