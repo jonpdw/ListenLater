@@ -21,6 +21,7 @@ namespace APITest.Pages {
         public IActionResult OnPost() {
             Console.WriteLine("Posted");
             UpdateJSON();
+            System.IO.File.WriteAllText($"cookies/{username}.txt", youtube_cookies); 
             return RedirectToPage();
         }
 
