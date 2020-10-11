@@ -14,13 +14,10 @@
     <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="archive.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="youtube-dl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="youtube_cookies.txt">
+    <None Update="archive\jonathan.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

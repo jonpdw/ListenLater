@@ -15,13 +15,13 @@ using static APITest.UploadFileToOvercastClass;
 namespace APITest {
     public class DownloadYouTube {
         public static async Task Do(string projectRootPath, CancellationToken cancelToken,
-            ILogger<StartProcessController> logger) {
+            ILogger<StartProcessController> logger, string username) {
             var optionsGetPlaylist = new OptionSet {
-                Cookies = projectRootPath + "/youtube_cookies.txt",
+                Cookies = projectRootPath + $"/cookies/{username}.txt",
                 DumpJson = true,
                 FlatPlaylist = true,
                 PlaylistEnd = 3,
-                DownloadArchive = projectRootPath + "/archive.txt",
+                DownloadArchive = projectRootPath + $"/archive/{username}.txt",
             };
 
             var optionsGetFileName = new OptionSet {
@@ -62,8 +62,8 @@ namespace APITest {
                     cancelToken);
                 await videoName;
                 var fileName = videoName.Result.Data[0];
-                await UploadFileToOvercast(fileName);
-                File.AppendAllText(projectRootPath + "/archive.txt", $"youtube {videoDict["url"]}" + Environment.NewLine);
+                await UploadFileToOvercast(fileName, username, logger);
+                File.AppendAllText(projectRootPath + $"/archive/{username}.txt", $"youtube {videoDict["url"]}" + Environment.NewLine);
                 File.Delete(fileName);
                 
             }

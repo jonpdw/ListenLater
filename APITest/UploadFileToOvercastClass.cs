@@ -6,10 +6,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using APITest.Controllers;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace APITest {
     static class UploadFileToOvercastClass {
-        public static async Task UploadFileToOvercast(String fileLocation) {
+        public static async Task UploadFileToOvercast(String fileLocation, string username, ILogger<StartProcessController> logger) {
             using (var w = new Watch("Main")) {
                 var baseAddress = new Uri("https://overcast.fm/");
                 var cookieContainer = new CookieContainer();
@@ -28,9 +31,16 @@ namespace APITest {
                     using (w.WatchInner("Login to Overcast")) {
                         using (var request =
                             new HttpRequestMessage(new HttpMethod("POST"), "https://overcast.fm/login")) {
+                            var userDetailsText = File.ReadAllText("UserDetails.json");
+                            var userDet = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(userDetailsText);
                             var contentList = new List<string>();
-                            contentList.Add("email=***REMOVED***");
-                            contentList.Add("password=***REMOVED***");
+                            try {
+                                contentList.Add($"email={userDet[username]["Overcast"]["username"]}");
+                                contentList.Add($"password={userDet[username]["Overcast"]["password"]}");
+                            }
+                            catch (KeyNotFoundException) {
+                                logger.LogError("User details not found");
+                            }
                             request.Content = new StringContent(string.Join("&", contentList));
                             request.Content.Headers.ContentType =
                                 MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
