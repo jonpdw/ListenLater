@@ -12,8 +12,13 @@ using Newtonsoft.Json;
 
 namespace APITest {
     static class UploadFileToOvercastClass {
-        public static async Task UploadFileToOvercast(String fileLocation, string username, ILogger<StartProcessController> logger) {
+        public static async Task UploadFileToOvercast(String fileLocation, string username,
+            ILogger<StartProcessController> logger) {
             using (var w = new Watch("Main")) {
+                var userDetailsText = File.ReadAllText("UserDetails.json");
+                var userDet =
+                    JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(
+                        userDetailsText);
                 var baseAddress = new Uri("https://overcast.fm/");
                 var cookieContainer = new CookieContainer();
 
@@ -31,8 +36,6 @@ namespace APITest {
                     using (w.WatchInner("Login to Overcast")) {
                         using (var request =
                             new HttpRequestMessage(new HttpMethod("POST"), "https://overcast.fm/login")) {
-                            var userDetailsText = File.ReadAllText("UserDetails.json");
-                            var userDet = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(userDetailsText);
                             var contentList = new List<string>();
                             try {
                                 contentList.Add($"email={userDet[username]["Overcast"]["username"]}");
@@ -41,6 +44,7 @@ namespace APITest {
                             catch (KeyNotFoundException) {
                                 logger.LogError("User details not found");
                             }
+
                             request.Content = new StringContent(string.Join("&", contentList));
                             request.Content.Headers.ContentType =
                                 MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
@@ -53,7 +57,8 @@ namespace APITest {
 
                     // Get AWS Details form HTML 
                     using (var w1 = w.WatchInner("Get AWS Details")) {
-                        using (var request = new HttpRequestMessage(new HttpMethod("GET"), "https://overcast.fm/uploads")) {
+                        using (var request =
+                            new HttpRequestMessage(new HttpMethod("GET"), "https://overcast.fm/uploads")) {
                             HttpResponseMessage response;
                             using (w1.WatchInner("Get AWS Website Request")) {
                                 response = await httpClient.SendAsync(request);
@@ -102,7 +107,6 @@ namespace APITest {
 
 
                     using (var w2 = w.WatchInner("Tell Overcast + Send AWS file")) {
-
                         Task<HttpResponseMessage> responseAWS;
                         using (w2.WatchInner("Send AWS")) {
                             // Send file to AWS
@@ -122,7 +126,7 @@ namespace APITest {
                             responseAWS = httpClient.SendAsync(requestAWS);
                             // Console.WriteLine(response.Content.ReadAsStringAsync().Result);                        using () {
                         }
-                        
+
                         await responseAWS;
                         responseAWS.Result.EnsureSuccessStatusCode();
 
@@ -138,23 +142,23 @@ namespace APITest {
                             responseOvercast = httpClient.SendAsync(requestOvercast);
                             // Console.WriteLine(response.Content.ReadAsStringAsync().Result);
                         }
+
                         await responseOvercast;
                         responseOvercast.Result.EnsureSuccessStatusCode();
                         // File.Delete(fileLocation);
                     }
-                    
-                    using (var request = new HttpRequestMessage(new HttpMethod("POST"), "https://api.pushover.net/1/messages.json"))
-                    {
+
+                    using (var request = new HttpRequestMessage(new HttpMethod("POST"),
+                        "https://api.pushover.net/1/messages.json")) {
                         var multipartContent = new MultipartFormDataContent();
-                        multipartContent.Add(new StringContent("***REMOVED***"), "token");
-                        multipartContent.Add(new StringContent("***REMOVED***"), "user");
+                        multipartContent.Add(new StringContent(userDet[username]["Pushover"]["token"]), "token");
+                        multipartContent.Add(new StringContent(userDet[username]["Pushover"]["user"]), "user");
                         multipartContent.Add(new StringContent("Overcast: "), "title");
                         multipartContent.Add(new StringContent(Path.GetFileName(fileLocation)), "message");
-                        request.Content = multipartContent; 
+                        request.Content = multipartContent;
 
                         var response = await httpClient.SendAsync(request);
                     }
-                    
                 }
             }
         }
