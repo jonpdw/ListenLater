@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using APITest.Controllers;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using YoutubeDLSharp;
@@ -15,7 +17,7 @@ using static APITest.UploadFileToOvercastClass;
 namespace APITest {
     public class DownloadYouTube {
         public static async Task Do(string projectRootPath, CancellationToken cancelToken,
-            ILogger<StartProcessController> logger, string username) {
+            ILogger<StartProcessController> logger, string username, IConfiguration _config) {
             var optionsGetPlaylist = new OptionSet {
                 Cookies = projectRootPath + $"/cookies/{username}.txt",
                 DumpJson = true,
@@ -44,14 +46,14 @@ namespace APITest {
             var watchLaterVideos = await ytdl.RunWithOptions(
                 new[] {"https://www.youtube.com/playlist?disable_polymer=true&list=WL"}, optionsGetPlaylist,
                 cancelToken);
-            
+
             if (watchLaterVideos.Success == false) {
                 Console.WriteLine("Problem getting watch later playlist");
                 return;
             }
 
             logger.LogInformation($"Watch later has a length of {watchLaterVideos.Data.Length}");
-            
+
             foreach (var videoString in watchLaterVideos.Data) {
                 cancelToken.ThrowIfCancellationRequested();
                 var videoDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(videoString);
@@ -63,9 +65,14 @@ namespace APITest {
                 await videoName;
                 var fileName = videoName.Result.Data[0];
                 await UploadFileToOvercast(fileName, username, logger);
-                File.AppendAllText(projectRootPath + $"/archive/{username}.txt", $"youtube {videoDict["url"]}" + Environment.NewLine);
+
+                var shouldAppend = _config.GetValue<bool>("useArchive");
+                if (shouldAppend) {
+                    File.AppendAllText(projectRootPath + $"/archive/{username}.txt",
+                        $"youtube {videoDict["url"]}" + Environment.NewLine);
+                }
+
                 File.Delete(fileName);
-                
             }
         }
     }
