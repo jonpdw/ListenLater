@@ -1,3 +1,7 @@
+# custom
+archive/ 
+
+
 # globs
 Makefile.in
 *.userprefs

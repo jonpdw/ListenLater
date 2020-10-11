@@ -24,7 +24,6 @@ namespace LiveSharp
         {
             // Use this method to execute any code in runtime
             // Every time you update this method LiveSharp will invoke it
-            Console.WriteLine("I am run!!!");
         }
     } 
 }
