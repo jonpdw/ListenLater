@@ -41,10 +41,10 @@ namespace APITest {
             var ytdl = new YoutubeDL();
             // set the path of the youtube-dl and FFmpeg if they're not in PATH or current directory
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
-                ytdl.YoutubeDLPath = "youtube-dl-linux";
+                ytdl.YoutubeDLPath = "youtube-dl/youtube-dl-linux";
             }
             else {
-                ytdl.YoutubeDLPath = "youtube-dl-windows.exe";
+                ytdl.YoutubeDLPath = "youtube-dl/youtube-dl-windows.exe";
             }
             // ytdl.FFmpegPath = "/usr/local/bin/ffmpeg";
 

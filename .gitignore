@@ -1,8 +1,8 @@
 # custom
-archive/
 cookies/ 
 UserDetails.json
 .git.bfg-report/
+already-downloaded-videos/
 
 # globs
 Makefile.in
