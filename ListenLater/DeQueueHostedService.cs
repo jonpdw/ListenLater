@@ -1,33 +1,42 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace ListenLater {
-    public class QueuedHostedService : BackgroundService
+    public class DeQueueHostedService : BackgroundService
     {
    
         private Task _backgroundTask;
         private readonly ILogger _logger;
         public IBackgroundTaskQueue TaskQueue { get; }
+        private readonly IConfiguration _config;
+        private DateTime lastRunEverything;
+        private readonly IHostEnvironment _hostingEnvironment;
 
-        public QueuedHostedService(IBackgroundTaskQueue taskQueue, ILoggerFactory loggerFactory)
+        public DeQueueHostedService(IBackgroundTaskQueue taskQueue, ILoggerFactory loggerFactory, IHostEnvironment hostingEnvironment, IConfiguration config)
         {
             TaskQueue = taskQueue;
-            _logger = loggerFactory.CreateLogger<QueuedHostedService>();
+            _logger = loggerFactory.CreateLogger<DeQueueHostedService>();
+            _hostingEnvironment = hostingEnvironment;
+            _config = config;
         }
 
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (false == stoppingToken.IsCancellationRequested)
-            {
+            while (false == stoppingToken.IsCancellationRequested) {
                 var workItem = await TaskQueue.DequeueAsync(stoppingToken);
                 try
                 {
                     await workItem(stoppingToken);
+                    TaskQueue.DecrementThingsFinishedFromQueue();
                 }
                 catch (Exception ex)
                 {
@@ -43,13 +52,20 @@ namespace ListenLater {
 
         Task<Func<CancellationToken, Task>> DequeueAsync(
             CancellationToken cancellationToken);
+        
+        int ThingsFinishedFromQueue();
+
+        void DecrementThingsFinishedFromQueue();
+        
     }
 
-    public class BackgroundTaskQueue : IBackgroundTaskQueue
+    public class QueueOfYouTubeAccounts : IBackgroundTaskQueue
     {
         private ConcurrentQueue<Func<CancellationToken, Task>> _workItems = new ConcurrentQueue<Func<CancellationToken, Task>>();
 
         private SemaphoreSlim _signal = new SemaphoreSlim(0);
+        
+        private int thingsFinishedFromQueue = 0;
 
         public void QueueBackgroundWorkItem(Func<CancellationToken, Task> workItem)
         {
@@ -59,6 +75,7 @@ namespace ListenLater {
             }
 
             _workItems.Enqueue(workItem);
+            Interlocked.Increment(ref thingsFinishedFromQueue);
             _signal.Release();
         }
 
@@ -68,6 +85,13 @@ namespace ListenLater {
             _workItems.TryDequeue(out var workItem);
 
             return workItem;
+        }
+
+        public int ThingsFinishedFromQueue() {
+            return thingsFinishedFromQueue;
+        }
+        public void DecrementThingsFinishedFromQueue() {
+            Interlocked.Decrement(ref thingsFinishedFromQueue);
         }
     }
 }

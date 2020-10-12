@@ -4,6 +4,7 @@ UserDetails.json
 .git.bfg-report/
 already-downloaded-videos/
 mp3/
+user-data/
 
 # globs
 Makefile.in

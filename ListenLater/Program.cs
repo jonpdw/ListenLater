@@ -22,8 +22,9 @@ namespace ListenLater
                 .ConfigureServices(services =>
                 {
                     // services.AddSingleton<IScopedProcessingService, ScopedProcessingService>();
-                    services.AddHostedService<QueuedHostedService>();
-                    services.AddSingleton<IBackgroundTaskQueue, BackgroundTaskQueue>();
+                    services.AddHostedService<DeQueueHostedService>();
+                    services.AddSingleton<IBackgroundTaskQueue, QueueOfYouTubeAccounts>();
+                    services.AddHostedService<ScheduledDownloadNewHostedService>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
