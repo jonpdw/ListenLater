@@ -12,7 +12,6 @@ namespace APITest.Pages {
 
         public string overcast_password { get; set; }
         public string youtube_cookies { get; set; }
-        public string pushover_token { get; set; }
         public string pushover_user { get; set; }
 
         public void OnGet() {
@@ -40,7 +39,6 @@ namespace APITest.Pages {
                 }, {
                     "Pushover",
                     new Dictionary<string, string> {
-                        {"token", pushover_token},
                         {"user", pushover_user}
                     }
                 }
