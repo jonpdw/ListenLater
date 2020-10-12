@@ -1,0 +1,24 @@
+@page
+@model ListenLater.Pages.Trigger
+
+@{
+    ViewData["Title"] = "Trigger";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <p>Enter your username here to trigger </p>
+    <form method="post">
+        <label >Username: </label><br>
+        <input type="text" asp-for="username" placeholder="John Doe" required size="40"/><br><br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>
