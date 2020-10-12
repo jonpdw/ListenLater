@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace APITest.Controllers {
     [ApiController]
-    [Route("api/go")]
+    [Route("api/download-new-videos")]
     public class StartProcessController : ControllerBase {
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly IBackgroundTaskQueue _taskQueue;
