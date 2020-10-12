@@ -13,25 +13,28 @@
 </head>
 <body>
 <div>
-      <form method="post">
-           <label >Username: </label><br>
-          <input type="text" asp-for="username" placeholder="John Doe" required size="40"/><br><br>
-          
-           <label >Overcast Username:</label><br>
-          <input type="text" asp-for="overcast_username" placeholder="example@gmail.com" required size="40"/><br><br>
-          
-           <label >Overcast Password: </label><br>
-          <input type="text" asp-for="overcast_username" placeholder="password123" required size="40"/><br><br>
-          
-           <label >Youtube Cookies: </label><br>
-          <textarea cols="80" rows="20" asp-for="youtube_cookies" wrap="off" required placeholder="# HTTP Cookie File downloaded with cookies.txt by Genuinous @@genuinous&#13;&#10;# This file can be used by wget, curl, aria2c and other standard compliant tools.&#13;&#10;# Usage Examples:&#13;&#10;#   1) wget -x --load-cookies cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#   2) curl --cookie cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#   3) aria2c --load-cookies cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#&#13;&#10;.youtube.com	TRUE	/	FALSE	1618620964	VISITOR_INFO1_LIVE	AZTNWYbRxPo&#13;&#10;.youtube.com	TRUE	/	TRUE	1146722301	CONSENT	YES+NZ.en+20170904-13-0&#13;&#10;.youtube.com	TRUE	/	TRUE	2643802401	LOGIN_INFO	RFmhF2swRgIhtN52PDXxEkOs-D3plTyiEBwYsQ5b6fa66AWVbBFj-vRQAiEAzpvpY_FqMjz82m6aRHJzeYebU9bUfay88DmMI0RUp-c:QUQ3MjNmeU9SYVV2Yk9xazRPOU1sY3hKbnZZYVdwRFpscFd4YTB1eWpNSU9hYmh6MEFaE2k5a1W5aXgxZGM4B3JvU1hSQmVmZzFzWlVQZXotZm1QSzJHT2NBU1dmZzVNbWc1RXIwTHBPR3lITVJWSXRVRDhnckdsQ3VpUlN6YWR3TkhXZC1NcXJMWGxLdEU3VXQwRU4yUERNUkdIaDJ0dUtKZGxkcGVzVDRNTHdZZ3BzLXR5NXRR&#13;&#10;.youtube.com	TRUE	/	TRUE	1609664691	NID	205=EiG3OR6dKoZ93_JjV_MLwy23ANeObXuYNFtxZvHOxROmtewPmAPngx2qPB4B4xos6x2dnHO_Bq4KHWUQsxbvXj1nHkbD1r84akD8t2dYK7kUxIriFwUrL4diqtJSKbWvCtPM-TAk69vk__mlFrQLPUrTJJsQPQK4rzVHXw17Rbc&#13;&#10;.youtube.com	TRUE	/	FALSE	1672155101	HSID	AWdEqBHa7IQ5PnQ2-&#13;&#10;.youtube.com	TRUE	/	TRUE	1682554101	SSID	A_ARUbRG_QNmO5Q6i&#13;&#10;.youtube.com	TRUE	/	FALSE	1662154101	APISID	HWcdfQj4muuj_srS/AhWJsqDBV4APAtMD-&#13;&#10;.youtube.com	TRUE	/	TRUE	1662154101	SAPISID	hn6FgOA1Up6BDZY2/AG_EVJVLBN326UcM3&#13;&#10;.youtube.com	TRUE	/	TRUE	1662154102	__Secure-3PAPISID	vn6FgWA1Up6BDZY2/BG_KVJVLBN126UcM3&#13;&#10;.youtube.com	TRUE	/	TRUE	1664804159	SID	2AfR_MJmjJd99VakUi-cKmZm_68NNE8tCn5c3-qPqQnUCn2MoZDwOmQBylvzxn1oAkPFyQ.&#13;&#10;.youtube.com	TRUE	/	TRUE	1664804159	__Secure-3PSID	1AfR_MJmjJd39VakUi-cKmZm_t8NNE8tCn5c3-qPqQnUCn2NSy2BbTyM1rYyf8NlZ945bg.&#13;&#10;.youtube.com	TRUE	/	TRUE	0	YSC	iVXoWmtDZLA&#13;&#10;.youtube.com	TRUE	/	TRUE	166545113	PREF	al=en&amp;amp;f1=50000000&amp;amp;cvdm=grid&amp;amp;volume=50&amp;amp;f5=30030&#13;&#10;.youtube.com	TRUE	/	TRUE	1633934024	SIDCC	AJi4QfEg7ObP-uCQ1dXRQRa93otMbKsf_SoZ-UHkRl020A0iKxdgOyiiPg0PIYE-9jOAt6V54Q&#13;&#10;.youtube.com	TRUE	/	FALSE	1633934021	__Secure-3PSIDCC	AJi3QfFHaEVmNefVKULG9aIG_wClfIyJjVxwQMUKVMmup2HVzfteigbP_Ej5ECQ-ehuc7pu0Q"></textarea><br><br>
-          
-           <label >Pushover User</label><br>
-          <input type="text" asp-for="pushover_user" placeholder="u69ixxtjaqfbyfiqmvm321o2povscx" required size="40"/><br><br>
-          
-          <button type="submit">Submit</button>
-          
-       </form>
+    <form method="post">
+        <label >Username: </label><br>
+        <input type="text" asp-for="username" placeholder="John Doe" required size="40"/><br><br>
+
+        <label >Overcast Username:</label><br>
+        <input type="text" asp-for="overcast_username" placeholder="example@gmail.com" required size="40"/><br><br>
+
+        <label >Overcast Password: </label><br>
+        <input type="text" asp-for="overcast_password" placeholder="password123" required size="40"/><br><br>
+
+        <label >Youtube Cookies: </label><br>
+        <textarea cols="80" rows="20" asp-for="youtube_cookies" wrap="off" required placeholder="# HTTP Cookie File downloaded with cookies.txt by Genuinous @@genuinous&#13;&#10;# This file can be used by wget, curl, aria2c and other standard compliant tools.&#13;&#10;# Usage Examples:&#13;&#10;#   1) wget -x --load-cookies cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#   2) curl --cookie cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#   3) aria2c --load-cookies cookies.txt &quot;https://www.youtube.com/&quot;&#13;&#10;#&#13;&#10;.youtube.com	TRUE	/	FALSE	1618620964	VISITOR_INFO1_LIVE	AZTNWYbRxPo&#13;&#10;.youtube.com	TRUE	/	TRUE	1146722301	CONSENT	YES+NZ.en+20170904-13-0&#13;&#10;.youtube.com	TRUE	/	TRUE	2643802401	LOGIN_INFO	RFmhF2swRgIhtN52PDXxEkOs-D3plTyiEBwYsQ5b6fa66AWVbBFj-vRQAiEAzpvpY_FqMjz82m6aRHJzeYebU9bUfay88DmMI0RUp-c:QUQ3MjNmeU9SYVV2Yk9xazRPOU1sY3hKbnZZYVdwRFpscFd4YTB1eWpNSU9hYmh6MEFaE2k5a1W5aXgxZGM4B3JvU1hSQmVmZzFzWlVQZXotZm1QSzJHT2NBU1dmZzVNbWc1RXIwTHBPR3lITVJWSXRVRDhnckdsQ3VpUlN6YWR3TkhXZC1NcXJMWGxLdEU3VXQwRU4yUERNUkdIaDJ0dUtKZGxkcGVzVDRNTHdZZ3BzLXR5NXRR&#13;&#10;.youtube.com	TRUE	/	TRUE	1609664691	NID	205=EiG3OR6dKoZ93_JjV_MLwy23ANeObXuYNFtxZvHOxROmtewPmAPngx2qPB4B4xos6x2dnHO_Bq4KHWUQsxbvXj1nHkbD1r84akD8t2dYK7kUxIriFwUrL4diqtJSKbWvCtPM-TAk69vk__mlFrQLPUrTJJsQPQK4rzVHXw17Rbc&#13;&#10;.youtube.com	TRUE	/	FALSE	1672155101	HSID	AWdEqBHa7IQ5PnQ2-&#13;&#10;.youtube.com	TRUE	/	TRUE	1682554101	SSID	A_ARUbRG_QNmO5Q6i&#13;&#10;.youtube.com	TRUE	/	FALSE	1662154101	APISID	HWcdfQj4muuj_srS/AhWJsqDBV4APAtMD-&#13;&#10;.youtube.com	TRUE	/	TRUE	1662154101	SAPISID	hn6FgOA1Up6BDZY2/AG_EVJVLBN326UcM3&#13;&#10;.youtube.com	TRUE	/	TRUE	1662154102	__Secure-3PAPISID	vn6FgWA1Up6BDZY2/BG_KVJVLBN126UcM3&#13;&#10;.youtube.com	TRUE	/	TRUE	1664804159	SID	2AfR_MJmjJd99VakUi-cKmZm_68NNE8tCn5c3-qPqQnUCn2MoZDwOmQBylvzxn1oAkPFyQ.&#13;&#10;.youtube.com	TRUE	/	TRUE	1664804159	__Secure-3PSID	1AfR_MJmjJd39VakUi-cKmZm_t8NNE8tCn5c3-qPqQnUCn2NSy2BbTyM1rYyf8NlZ945bg.&#13;&#10;.youtube.com	TRUE	/	TRUE	0	YSC	iVXoWmtDZLA&#13;&#10;.youtube.com	TRUE	/	TRUE	166545113	PREF	al=en&amp;amp;f1=50000000&amp;amp;cvdm=grid&amp;amp;volume=50&amp;amp;f5=30030&#13;&#10;.youtube.com	TRUE	/	TRUE	1633934024	SIDCC	AJi4QfEg7ObP-uCQ1dXRQRa93otMbKsf_SoZ-UHkRl020A0iKxdgOyiiPg0PIYE-9jOAt6V54Q&#13;&#10;.youtube.com	TRUE	/	FALSE	1633934021	__Secure-3PSIDCC	AJi3QfFHaEVmNefVKULG9aIG_wClfIyJjVxwQMUKVMmup2HVzfteigbP_Ej5ECQ-ehuc7pu0Q"></textarea><br><br>
+
+        <label >Pushover User</label><br>
+        <input type="text" asp-for="pushover_user" placeholder="u69ixxtjaqfbyfiqmvm321o2povscx" required size="40"/><br><br>
+
+        <label >Run Every 30 mins</label><br>
+        <input type="checkbox" asp-for="runEvery30Min" /><br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
 </div>
 </body>
 </html>
