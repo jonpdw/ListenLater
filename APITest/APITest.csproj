@@ -22,5 +22,6 @@
     <None Update="youtube-dl\youtube-dl-linux">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="wwwroot\home_page_diagram.png" />
   </ItemGroup>
 </Project>
