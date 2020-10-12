@@ -23,7 +23,7 @@ namespace APITest {
                 DumpJson = true,
                 FlatPlaylist = true,
                 PlaylistEnd = 3,
-                DownloadArchive = projectRootPath + $"/archive/{username}.txt",
+                DownloadArchive = projectRootPath + $"/already-downloaded-videos/{username}.txt",
             };
 
             var optionsGetFileName = new OptionSet {
@@ -71,9 +71,9 @@ namespace APITest {
                 var fileName = videoName.Result.Data[0];
                 await UploadFileToOvercast(fileName, username, logger);
 
-                var shouldAppend = _config.GetValue<bool>("useArchive");
+                var shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
                 if (shouldAppend) {
-                    File.AppendAllText(projectRootPath + $"/archive/{username}.txt",
+                    File.AppendAllText(projectRootPath + $"/already-downloaded-videos/{username}.txt",
                         $"youtube {videoDict["url"]}" + Environment.NewLine);
                 }
 
