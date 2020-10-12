@@ -19,11 +19,11 @@ namespace APITest {
         public static async Task Do(string projectRootPath, CancellationToken cancelToken,
             ILogger<StartProcessController> logger, string username, IConfiguration _config) {
             var optionsGetPlaylist = new OptionSet {
-                Cookies = projectRootPath + $"/cookies/{username}.txt",
+                Cookies = projectRootPath + $"/user-data/cookies/{username}.txt",
                 DumpJson = true,
                 FlatPlaylist = true,
                 PlaylistEnd = 3,
-                DownloadArchive = projectRootPath + $"/already-downloaded-videos/{username}.txt",
+                DownloadArchive = projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
             };
 
             var optionsGetFileName = new OptionSet {
@@ -73,7 +73,7 @@ namespace APITest {
 
                 var shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
                 if (shouldAppend) {
-                    File.AppendAllText(projectRootPath + $"/already-downloaded-videos/{username}.txt",
+                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
                         $"youtube {videoDict["url"]}" + Environment.NewLine);
                 }
 

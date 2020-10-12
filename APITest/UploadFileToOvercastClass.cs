@@ -15,7 +15,7 @@ namespace APITest {
         public static async Task UploadFileToOvercast(String fileLocation, string username,
             ILogger<StartProcessController> logger) {
             using (var w = new StopWatchWithNesting("Main")) {
-                var userDetailsText = File.ReadAllText("UserDetails.json");
+                var userDetailsText = File.ReadAllText("user-data/UserDetails.json");
                 var userDet =
                     JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(
                         userDetailsText);

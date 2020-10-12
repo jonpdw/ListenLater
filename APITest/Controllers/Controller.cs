@@ -29,7 +29,7 @@ namespace APITest.Controllers {
         public string Get(string username) {
             _logger.LogInformation("---Get Request---!");
 
-            var userDetailsText = System.IO.File.ReadAllText("UserDetails.json");
+            var userDetailsText = System.IO.File.ReadAllText("user-data/UserDetails.json");
             var userDet =
                 JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(
                     userDetailsText);

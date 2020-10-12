@@ -21,12 +21,12 @@ namespace APITest.Pages {
         public IActionResult OnPost() {
             Console.WriteLine("Posted");
             UpdateJSON();
-            System.IO.File.WriteAllText($"cookies/{username}.txt", youtube_cookies); 
+            System.IO.File.WriteAllText($"user-data/cookies/{username}.txt", youtube_cookies); 
             return RedirectToPage();
         }
 
         private void UpdateJSON() {
-            var userDetailsText = System.IO.File.ReadAllText("UserDetails.json");
+            var userDetailsText = System.IO.File.ReadAllText("user-data/UserDetails.json");
             var userDet =
                 JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(
                     userDetailsText);
@@ -46,7 +46,7 @@ namespace APITest.Pages {
                 }
             };
             string json = JsonConvert.SerializeObject(userDet, Formatting.Indented);
-            System.IO.File.WriteAllText("UserDetails.json", json);
+            System.IO.File.WriteAllText("user-data/UserDetails.json", json);
         }
     }
 }
