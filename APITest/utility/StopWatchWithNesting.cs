@@ -10,18 +10,18 @@ using System.Diagnostics;
  // }
 
 namespace APITest {
-    public class Watch : IDisposable {
+    public class StopWatchWithNesting : IDisposable {
         private readonly Timing _timing;
 
         private readonly Stopwatch _sw;
 
-        public Watch(string n) {
+        public StopWatchWithNesting(string n) {
             _timing = new Timing(n, 0);
             _sw = new Stopwatch();
             _sw.Start();
         }
 
-        public Watch(string n, int indentLevel) {
+        public StopWatchWithNesting(string n, int indentLevel) {
             _timing = new Timing(n, indentLevel);
             _sw = new Stopwatch();
             _sw.Start();
@@ -42,8 +42,8 @@ namespace APITest {
             }
         }
 
-        public Watch WatchInner(string scopeName) {
-            var timingBuilder = new Watch(scopeName, _timing._indentLevel + 1);
+        public StopWatchWithNesting WatchInner(string scopeName) {
+            var timingBuilder = new StopWatchWithNesting(scopeName, _timing._indentLevel + 1);
             _timing.InnerScopes.Add(timingBuilder._timing);
             return timingBuilder;
         }
