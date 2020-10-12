@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace ListenLater {
     static class UploadFileToOvercastClass {
         public static async Task UploadFileToOvercast(String fileLocation, string username,
-            ILogger<StartProcessController> logger) {
+            ILogger logger) {
             using (var w = new StopWatchWithNesting("Main")) {
                 var userDetailsText = File.ReadAllText("user-data/UserDetails.json");
                 var userDet =

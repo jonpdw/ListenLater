@@ -17,12 +17,12 @@ using static ListenLater.UploadFileToOvercastClass;
 namespace ListenLater {
     public class DownloadYouTube {
         public static async Task Do(string projectRootPath, CancellationToken cancelToken,
-            ILogger<StartProcessController> logger, string username, IConfiguration _config) {
+            ILogger logger, string username, IConfiguration _config) {
             var optionsGetPlaylist = new OptionSet {
                 Cookies = projectRootPath + $"/user-data/cookies/{username}.txt",
                 DumpJson = true,
                 FlatPlaylist = true,
-                PlaylistEnd = 3,
+                PlaylistEnd = 2,
                 DownloadArchive = projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
             };
 
@@ -63,6 +63,13 @@ namespace ListenLater {
                 cancelToken.ThrowIfCancellationRequested();
                 var videoDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(videoString);
                 logger.LogInformation(videoDict["title"]);
+                
+                var shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
+                if (shouldAppend) {
+                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
+                        $"youtube {videoDict["url"]}" + Environment.NewLine);
+                }
+                
                 var videoName =
                     ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsGetFileName, new CancellationToken());
                 var videoDownload = await ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsDownloadAudio,
@@ -71,11 +78,6 @@ namespace ListenLater {
                 var fileName = videoName.Result.Data[0];
                 await UploadFileToOvercast(fileName, username, logger);
 
-                var shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
-                if (shouldAppend) {
-                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
-                        $"youtube {videoDict["url"]}" + Environment.NewLine);
-                }
 
                 File.Delete(fileName);
             }
