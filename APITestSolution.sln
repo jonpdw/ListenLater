@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APITest", "APITest\APITest.csproj", "{01C052AE-7F0D-4AF9-856B-22007E78FF28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListenNotes", "ListenNotes\ListenNotes.csproj", "{01C052AE-7F0D-4AF9-856B-22007E78FF28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
