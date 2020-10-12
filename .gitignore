@@ -3,6 +3,7 @@ cookies/
 UserDetails.json
 .git.bfg-report/
 already-downloaded-videos/
+mp3/
 
 # globs
 Makefile.in

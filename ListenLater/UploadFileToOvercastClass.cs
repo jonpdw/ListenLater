@@ -6,11 +6,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ListenNotes.Controllers;
+using ListenLater.Controllers;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace ListenNotes {
+namespace ListenLater {
     static class UploadFileToOvercastClass {
         public static async Task UploadFileToOvercast(String fileLocation, string username,
             ILogger<StartProcessController> logger) {

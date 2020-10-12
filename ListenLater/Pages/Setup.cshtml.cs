@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 
-namespace ListenNotes.Pages {
+namespace ListenLater.Pages {
     [BindProperties]
     public class AddDetails : PageModel {
         public string username { get; set; }
