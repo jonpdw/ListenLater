@@ -1,0 +1,47 @@
+@page
+@model APITest.Pages.Instructions
+
+@{
+    ViewData["Title"] = "Help";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2 id="instructions">Help</h2>
+    <p>Note: This is the alpha version of the app so you may experience some bugs</p>
+    <h3 id="what-the-fields-mean-in-setup-">'Setup' Help</h3>
+    <h5 id="username">Username</h5>
+    <p>This is your username for this website. It can be anything. </p>
+    <h5 id="overcast-username">Overcast Username</h5>
+    <p>This is the username you use to login at <a href="https://overcast.fm/login">Overcast.fm</a></p>
+    <h5 id="overcast-password">Overcast Password</h5>
+    <p>This is the password you use to login at <a href="https://overcast.fm/login">Overcast.fm</a></p>
+    <h5 id="youtube-cookies-">YouTube Cookies:</h5>
+    <p>
+        Download your cookies for YouTube by using an extension like this:<br>
+        <a href="https://chrome.google.com/webstore/detail/cookiestxt-one-click/pneebejkjkhadolkdpiigilcjcnopkog/related?hl=en">cookies.txt One Click - Chrome Web Store</a><br>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/cookies-txt/">cookies.txt – Get this Extension for 🦊 Firefox (en-US)</a>
+    </p>
+    <h5 id="pushover-user">Pushover User</h5>
+    <p>Pushover allows you to get push notifications on your phone when a new video is uploaded. </p>
+    <ol>
+        <li>Create an account on pushover.net/ </li>
+        <li>Get the User key from here: </li>
+        <p>
+            <img src="pushover-user-key.png" alt="" width="600px">
+        </p>
+        <li>Set up an account to receive notifications on</li>
+        <p>
+            <img src="pushover_add_device.png" alt="" width="600px">
+        </p>
+    </ol>
+
+</div>
+</body>
+</html>
