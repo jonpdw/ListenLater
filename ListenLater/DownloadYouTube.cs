@@ -25,19 +25,19 @@ namespace ListenLater {
                 PlaylistEnd = 2,
                 DownloadArchive = projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
             };
-
+            
             var optionsGetFileName = new OptionSet {
                 Output = "mp3/%(uploader)s - %(title)s.%(ext)s",
                 Format = "worstaudio[ext=m4a]",
                 GetFilename = true,
                 NoProgress = true,
             };
-
+            
             var optionsDownloadAudio = new OptionSet {
                 Output = "mp3/%(uploader)s - %(title)s.%(ext)s",
                 Format = "worstaudio[ext=m4a]",
             };
-
+            
             var ytdl = new YoutubeDL();
             // set the path of the youtube-dl and FFmpeg if they're not in PATH or current directory
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
@@ -47,18 +47,18 @@ namespace ListenLater {
                 ytdl.YoutubeDLPath = "youtube-dl/youtube-dl-windows.exe";
             }
             // ytdl.FFmpegPath = "/usr/local/bin/ffmpeg";
-
+            
             var watchLaterVideos = await ytdl.RunWithOptions(
                 new[] {"https://www.youtube.com/playlist?disable_polymer=true&list=WL"}, optionsGetPlaylist,
                 cancelToken);
-
+            
             if (watchLaterVideos.Success == false) {
                 Console.WriteLine("Problem getting watch later playlist");
                 return;
             }
-
+            
             logger.LogInformation($"Watch later has a length of {watchLaterVideos.Data.Length}");
-
+            
             foreach (var videoString in watchLaterVideos.Data) {
                 cancelToken.ThrowIfCancellationRequested();
                 var videoDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(videoString);
@@ -77,8 +77,8 @@ namespace ListenLater {
                 await videoName;
                 var fileName = videoName.Result.Data[0];
                 await UploadFileToOvercast(fileName, username, logger);
-
-
+            
+            
                 File.Delete(fileName);
             }
         }

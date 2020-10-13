@@ -13,11 +13,9 @@ namespace ListenLater {
     public class DeQueueHostedService : BackgroundService
     {
    
-        private Task _backgroundTask;
         private readonly ILogger _logger;
         public IBackgroundTaskQueue TaskQueue { get; }
         private readonly IConfiguration _config;
-        private DateTime lastRunEverything;
         private readonly IHostEnvironment _hostingEnvironment;
 
         public DeQueueHostedService(IBackgroundTaskQueue taskQueue, ILoggerFactory loggerFactory, IHostEnvironment hostingEnvironment, IConfiguration config)

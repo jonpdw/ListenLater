@@ -27,7 +27,7 @@ namespace ListenLater.Controllers {
 
         [Route("{username}")]
         public string Get(string username) {
-            _logger.LogInformation("---Get Request---!");
+            _logger.LogInformation("---Get Request---");
 
             var userDetailsText = System.IO.File.ReadAllText("user-data/UserDetails.json");
             var userDet =

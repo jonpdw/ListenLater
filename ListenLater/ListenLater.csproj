@@ -2,16 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>a999ea18-a85e-4e8d-b4cf-bc252428d8f2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LiveSharp" Version="1.6.12" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="YoutubeDLSharp" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="mp3" />
     <Folder Include="mp3\" />
     <Folder Include="bin\" />
   </ItemGroup>
