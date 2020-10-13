@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Formatters.Xml;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -26,20 +27,26 @@ namespace ListenLater {
             _config = config;
         }
 
-        public async Task StartAsync(CancellationToken stoppingToken)
+        public Task StartAsync(CancellationToken stoppingToken)
         {
+            WrapMethod(stoppingToken);
+
+            // _timer = new Timer(DoWork, null, TimeSpan.Zero, 
+            //     TimeSpan.FromSeconds(10));
+            return Task.CompletedTask;
+        }
+        
+        private async void WrapMethod(CancellationToken stoppingToken) {
             _logger.LogInformation("Timed Hosted Service running.");
             while (false == stoppingToken.IsCancellationRequested) {
                DoWork(null);
                await Task.Delay(1000 * 10, stoppingToken);
+               // Don't try add new things to the queue if stuff is still downloading
                while (_taskQueue.ThingsFinishedFromQueue() > 0) {
-                   await Task.Delay(1000 * 1);
+                   await Task.Delay(1000 * 10);
                }
                _logger.LogInformation("Waited 10s and Queue Empty. Lets check YouTube again");
             }
-
-            // _timer = new Timer(DoWork, null, TimeSpan.Zero, 
-            //     TimeSpan.FromSeconds(10));
         }
 
         private void DoWork(object state)
