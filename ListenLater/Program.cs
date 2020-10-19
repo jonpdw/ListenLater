@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace ListenLater
 {
@@ -14,6 +15,10 @@ namespace ListenLater
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.AzureAnalytics(workspaceId: "84a91ea4-17d4-48be-b6c7-1f85e47c9773", 
+                    authenticationId: "BBQKOoUudBchSxrlD2Z+UJkwW149XA8Q57XJML9GPM/Vo9ysyEXk3T166omMw4Krss9YceOjeqphYZVDSCXJZg==")
+                .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -29,6 +34,8 @@ namespace ListenLater
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .UseSerilog()
+        ;
     }
 }
