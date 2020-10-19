@@ -8,6 +8,7 @@ using ListenLater.Controllers;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
