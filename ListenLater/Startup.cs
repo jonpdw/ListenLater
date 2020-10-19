@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ namespace ListenLater
 {
     public class Startup
     {
+        private ILogger<Startup> _logger;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -33,8 +35,10 @@ namespace ListenLater
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime applicationLifetime, ILogger<Startup> logger) {
+            _logger = logger;
+            logger.LogInformation("Startup");
+            Utility.PushoverSendMessage("Startup", logger).Wait();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -44,6 +48,7 @@ namespace ListenLater
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -56,6 +61,12 @@ namespace ListenLater
                 endpoints.MapControllers();
                 endpoints.MapRazorPages();
             });
+        }
+
+        private void OnShutdown() {
+            _logger.LogWarning("Shutting Down");
+            // Utility.PushoverSendMessage("Shutdown", _logger).Wait();
+            Utility.PushoverSendMessageNotAsync("Shutdown", _logger);
         }
     }
 }

@@ -7,10 +7,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.AzureAnalytics" Version="4.6.0" />
     <PackageReference Include="YoutubeDLSharp" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="mp3" />
     <Folder Include="mp3\" />
     <Folder Include="bin\" />
   </ItemGroup>
@@ -22,5 +25,65 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="wwwroot\home_page_diagram.png" />
+    <None Update="user-data\RunEvery30Mins.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="user-data\cookies\jonathan.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="user-data\already-downloaded-videos\jonathan.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\appsettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\APITest.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\APITest.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\APITest.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\appsettings.Development (Jonathans-MacBook-Pro.local's conflicted copy 2020-10-13).json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\appsettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenNotes.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenNotes.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenNotes.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\launchSettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\APITest3 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\APIYouTubeLinux - Web Deploy1\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\ListenLater - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Debug\netcoreapp3.1\user-data\UserDetails.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\APITest.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\APITest.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\APITest.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\appsettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\launchSettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\APITest3 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\APIYouTubeLinux - Web Deploy1\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\ListenLater - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\bin (Ignored Item Conflict)\Release\netcoreapp3.1\user-data\UserDetails.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\ListenLater.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\launchSettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\APITest3 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\APIYouTubeLinux - Web Deploy1\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\ListenLater - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\Properties\ServiceDependencies\ListenLater5 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Debug\netcoreapp3.1\user-data\UserDetails.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\appsettings.Development.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\appsettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\ListenLater.deps.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\ListenLater.runtimeconfig.dev.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\ListenLater.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\launchSettings.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\APITest3 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\APIYouTubeLinux - Web Deploy1\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\ListenLater - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\Properties\ServiceDependencies\ListenLater5 - Web Deploy\profile.arm.json" />
+    <_ContentIncludedByDefault Remove="bin (Ignored Item Conflict)\Release\netcoreapp3.1\user-data\UserDetails.json" />
   </ItemGroup>
 </Project>

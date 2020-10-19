@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 // using (var w = new Watch("Main")) {
- //
- // using (w.WatchInner("SomeInnerScope1")) {
- //     // do something
- // }
- // }
+//
+// using (w.WatchInner("SomeInnerScope1")) {
+//     // do something
+// }
+// }
 
 namespace ListenLater {
     public class StopWatchWithNesting : IDisposable {
@@ -48,11 +48,9 @@ namespace ListenLater {
             return timingBuilder;
         }
     }
-    
-    public class Timing
-    {
-        public Timing(string scopeName, int indentLevel)
-        {
+
+    public class Timing {
+        public Timing(string scopeName, int indentLevel) {
             // Console.WriteLine($"Started: {scopeName}");
             InnerScopes = new List<Timing>();
             ScopeName = scopeName;
@@ -66,13 +64,12 @@ namespace ListenLater {
         public string ScopeName { get; }
 
         public int _indentLevel { get; set; }
-        
+
         public void Print() {
-            Console.WriteLine($"{new string('\t',_indentLevel)}{ScopeName,-25}: {Elapsed.TotalSeconds:F5}");
+            Console.WriteLine($"{new string('\t', _indentLevel)}{ScopeName,-25}: {Elapsed.TotalSeconds:F5}");
             // foreach (var innerStop in InnerScopes) {
             //     innerStop.Print();
             // }
         }
-
     }
 }

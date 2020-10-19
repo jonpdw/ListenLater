@@ -8,6 +8,7 @@ using ListenLater.Controllers;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic.FileIO;
 using Newtonsoft.Json;
 using YoutubeDLSharp;
 using YoutubeDLSharp.Options;
@@ -64,22 +65,43 @@ namespace ListenLater {
                 var videoDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(videoString);
                 logger.LogInformation(videoDict["title"]);
                 
-                var shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
-                if (shouldAppend) {
-                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
-                        $"youtube {videoDict["url"]}" + Environment.NewLine);
-                }
+                await Utility.PushoverSendMessage($"STARTED --- {videoDict["title"]}", Utility.GetUserDetailsDictionary()[username]["Pushover"]["user"], logger);
+                
                 
                 var videoName =
                     ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsGetFileName, new CancellationToken());
                 var videoDownload = await ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsDownloadAudio,
                     cancelToken);
                 await videoName;
-                var fileName = videoName.Result.Data[0];
-                await UploadFileToOvercast(fileName, username, logger);
+                string fileNameWithPath;
+                bool shouldAppend;
+                try {
+                    fileNameWithPath = videoName.Result.Data[0];
+                }
+                catch (IndexOutOfRangeException e) {
+                    shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
+                    if (shouldAppend) {
+                        File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
+                            $"youtube {videoDict["url"]}" + Environment.NewLine);
+                    }
+                    logger.LogWarning(e.Message);
+                    continue;
+                }
+                fileNameWithPath = videoName.Result.Data[0];
+                var fileName = Path.GetFileName(fileNameWithPath);
+                var fileNameWithPathReplaced = fileNameWithPath.Replace("_", " ");
+                if (fileName.Contains("_")) {
+                    FileSystem.RenameFile($"{fileNameWithPath}", fileName.Replace("_", " "));
+                }
+                await UploadFileToOvercast(fileNameWithPathReplaced, username, logger);
+                
+                shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
+                if (shouldAppend) {
+                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
+                        $"youtube {videoDict["url"]}" + Environment.NewLine);
+                }
             
-            
-                File.Delete(fileName);
+                File.Delete(fileNameWithPathReplaced);
             }
         }
     }
