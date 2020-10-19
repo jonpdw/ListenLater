@@ -10,8 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace ListenLater {
-    public class ScheduledDownloadNewHostedService : IHostedService, IDisposable
-    {
+    public class ScheduledDownloadNewHostedService : IHostedService, IDisposable {
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly IBackgroundTaskQueue _taskQueue;
         private int executionCount = 0;
@@ -19,8 +18,8 @@ namespace ListenLater {
         private Timer _timer;
         private readonly IConfiguration _config;
 
-        public ScheduledDownloadNewHostedService(ILogger<ScheduledDownloadNewHostedService> logger, IHostEnvironment hostingEnvironment, IBackgroundTaskQueue taskQueue, IConfiguration config )
-        {
+        public ScheduledDownloadNewHostedService(ILogger<ScheduledDownloadNewHostedService> logger, IHostEnvironment hostingEnvironment, IBackgroundTaskQueue taskQueue,
+            IConfiguration config) {
             _hostingEnvironment = hostingEnvironment;
             _taskQueue = taskQueue;
             _logger = logger;
@@ -33,9 +32,9 @@ namespace ListenLater {
 
             // _timer = new Timer(DoWork, null, TimeSpan.Zero, 
             //     TimeSpan.FromSeconds(10));
-            return Task.CompletedTask;
+            // return Task.CompletedTask;
         }
-        
+
         private async void WrapMethod(CancellationToken stoppingToken) {
             _logger.LogInformation("Timed Hosted Service running.");
             while (false == stoppingToken.IsCancellationRequested) {
@@ -61,12 +60,9 @@ namespace ListenLater {
                     _logger.LogInformation( "{Count} Finished", count);
                 });
             }
-
-            
         }
 
-        public Task StopAsync(CancellationToken stoppingToken)
-        {
+        public Task StopAsync(CancellationToken stoppingToken) {
             _logger.LogInformation("Timed Hosted Service is stopping.");
 
             _timer?.Change(Timeout.Infinite, 0);
@@ -74,9 +70,8 @@ namespace ListenLater {
             return Task.CompletedTask;
         }
 
-        public void Dispose()
-        {
+        public void Dispose() {
             _timer?.Dispose();
         }
-    } 
+    }
 }
