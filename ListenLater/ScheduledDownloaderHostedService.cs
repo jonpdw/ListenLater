@@ -26,7 +26,15 @@ namespace ListenLater {
             _config = config;
         }
 
-        public async Task StartAsync(CancellationToken stoppingToken) {
+        public Task StartAsync(CancellationToken stoppingToken) {
+            WrapMethod(stoppingToken);
+
+            // _timer = new Timer(DoWork, null, TimeSpan.Zero, 
+            //     TimeSpan.FromSeconds(10));
+            return Task.CompletedTask;
+        }
+
+        private async void WrapMethod(CancellationToken stoppingToken) {
             _logger.LogInformation("Timed Hosted Service running.");
             while (false == stoppingToken.IsCancellationRequested) {
                 DoWork(null);
@@ -34,28 +42,11 @@ namespace ListenLater {
                 await Task.Delay(1000 * 10, stoppingToken);
                 // Don't try add new things to the queue if stuff is still downloading
                 while (_taskQueue.ThingsFinishedFromQueue() > 0) {
-                    await Task.Delay(1000 * 10, stoppingToken);
+                    await Task.Delay(1000 * 10);
                 }
+
             }
-            // WrapMethod(stoppingToken);
-
-            // _timer = new Timer(DoWork, null, TimeSpan.Zero, 
-            //     TimeSpan.FromSeconds(10));
-            // return Task.CompletedTask;
         }
-
-        // private async void WrapMethod(CancellationToken stoppingToken) {
-        //     _logger.LogInformation("Timed Hosted Service running.");
-        //     while (false == stoppingToken.IsCancellationRequested) {
-        //         DoWork(null);
-        //         // await Task.Delay(1000 * 60 * 30, stoppingToken);
-        //         await Task.Delay(1000 * 10, stoppingToken);
-        //         // Don't try add new things to the queue if stuff is still downloading
-        //         while (_taskQueue.ThingsFinishedFromQueue() > 0) {
-        //             await Task.Delay(1000 * 10, stoppingToken);
-        //         }
-        //     }
-        // }
 
         private void DoWork(object state) {
             List<string> profilesToRun = File.ReadLines("user-data/RunEvery30Mins.txt").ToList();
