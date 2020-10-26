@@ -63,46 +63,76 @@ namespace ListenLater {
             foreach (var videoString in watchLaterVideos.Data) {
                 cancelToken.ThrowIfCancellationRequested();
                 var videoDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(videoString);
-                logger.LogInformation(videoDict["title"]);
                 
+                logger.LogInformation(videoDict["title"]);
                 await Utility.PushoverSendMessage($"STARTED --- {videoDict["title"]}", Utility.GetUserDetailsDictionary()[username]["Pushover"]["user"], logger);
                 
-                
-                var videoName =
-                    ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsGetFileName, new CancellationToken());
-                var videoDownload = await ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsDownloadAudio,
-                    cancelToken);
+                var videoName = ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsGetFileName, new CancellationToken());
+                var videoDownload = await ytdl.RunWithOptions(new[] {videoDict["url"]}, optionsDownloadAudio, cancelToken);
                 await videoName;
-                string fileNameWithPath;
-                bool shouldAppend;
-                try {
-                    fileNameWithPath = videoName.Result.Data[0];
-                }
-                catch (IndexOutOfRangeException e) {
-                    shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
-                    if (shouldAppend) {
-                        File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
-                            $"youtube {videoDict["url"]}" + Environment.NewLine);
-                    }
-                    logger.LogWarning(e.Message);
+
+                if (NotSafeToExtractVideoName(logger, videoName)) {
+                    UpdateAlreadyDownloadedVideos(projectRootPath, username, _config, videoDict);
                     continue;
                 }
-                fileNameWithPath = videoName.Result.Data[0];
-                var fileName = Path.GetFileName(fileNameWithPath);
-                var fileNameWithPathReplaced = fileNameWithPath.Replace("_", " ");
-                if (fileName.Contains("_")) {
-                    FileSystem.RenameFile($"{fileNameWithPath}", fileName.Replace("_", " "));
+                var fileNameWithPath = videoName.Result.Data[0];
+
+                fileNameWithPath = ChangeCharInFileName(fileNameWithPath, " ", "_");
+                Console.WriteLine("Started Sponsorblock");
+                try {
+                    // await SponsorBlock.RemoveSegments("9wJn6nOEr7Q", "/mp3/Apple.m4a", projectRootPath);
+                    fileNameWithPath = await SponsorBlock.RemoveSegments(videoDict["url"], fileNameWithPath, projectRootPath, logger);
                 }
+                catch (Exception e) {
+                    logger.LogError(e.Message);
+                    Console.WriteLine(e);
+                    UpdateAlreadyDownloadedVideos(projectRootPath, username, _config, videoDict);
+                    continue;
+                }
+                
+                var fileNameWithPathReplaced = ChangeCharInFileName(fileNameWithPath, "_", " ");
+
                 await UploadFileToOvercast(fileNameWithPathReplaced, username, logger);
                 
-                shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
-                if (shouldAppend) {
-                    File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
-                        $"youtube {videoDict["url"]}" + Environment.NewLine);
-                }
-            
+                UpdateAlreadyDownloadedVideos(projectRootPath, username, _config, videoDict);
+
                 File.Delete(fileNameWithPathReplaced);
             }
+        }
+
+        private static bool NotSafeToExtractVideoName(ILogger logger, Task<RunResult<string[]>> videoName) {
+            try {
+                var temp = videoName.Result.Data[0];
+            }
+            catch (IndexOutOfRangeException e) {
+                logger.LogWarning(e.Message);
+                return true;
+            }
+
+            return false;
+        }
+
+        private static void UpdateAlreadyDownloadedVideos(string projectRootPath, string username, IConfiguration _config, Dictionary<string, string> videoDict) {
+            bool shouldAppend;
+            shouldAppend = _config.GetValue<bool>("useAlreadyDownloadedVideosList");
+            if (shouldAppend) {
+                File.AppendAllText(projectRootPath + $"/user-data/already-downloaded-videos/{username}.txt",
+                    $"youtube {videoDict["url"]}" + Environment.NewLine);
+            }
+        }
+
+        private static string ChangeCharInFileName(string fileNameWithPath, string oldVal, string newVal) {
+            var justFileName = Path.GetFileName(fileNameWithPath);
+            var fileNameWithPathWithCharsReplaced = fileNameWithPath.Replace(oldVal, newVal);
+            if (justFileName.Contains(oldVal)) {
+                // If the file already exists it will cause the rename to throw an error. This can sometimes happen if an error happens in the Sponsorblock class and so the file from last time isn't deleted
+                if (FileSystem.FileExists(fileNameWithPathWithCharsReplaced)==false)
+                {
+                    FileSystem.RenameFile($"{fileNameWithPath}", justFileName.Replace(oldVal, newVal));
+                }
+            }
+
+            return fileNameWithPathWithCharsReplaced;
         }
     }
 }

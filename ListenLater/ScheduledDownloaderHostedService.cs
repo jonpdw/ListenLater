@@ -38,8 +38,8 @@ namespace ListenLater {
             _logger.LogInformation("Timed Hosted Service running.");
             while (false == stoppingToken.IsCancellationRequested) {
                 DoWork(null);
-                // await Task.Delay(1000 * 60 * 30, stoppingToken);
-                await Task.Delay(1000 * 10, stoppingToken);
+                await Task.Delay(1000 * 60 * 30, stoppingToken);
+                // await Task.Delay(1000 * 10, stoppingToken);
                 // Don't try add new things to the queue if stuff is still downloading
                 while (_taskQueue.ThingsFinishedFromQueue() > 0) {
                     await Task.Delay(1000 * 10);
@@ -63,8 +63,9 @@ namespace ListenLater {
 
         public Task StopAsync(CancellationToken stoppingToken) {
             _logger.LogInformation("Timed Hosted Service is stopping.");
+            Utility.PushoverSendMessage("--- StopAsync ---", _logger).Wait();
 
-            _timer?.Change(Timeout.Infinite, 0);
+            // _timer?.Change(Timeout.Infinite, 0);
 
             return Task.CompletedTask;
         }

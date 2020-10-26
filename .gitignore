@@ -5,6 +5,9 @@ UserDetails.json
 already-downloaded-videos/
 mp3/
 user-data/
+ffmpeg-binarys/
+appsettings.json
+appsettings.Development.json
 
 # globs
 Makefile.in

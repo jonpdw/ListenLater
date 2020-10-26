@@ -9,10 +9,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.8" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.AzureAnalytics" Version="4.6.0" />
+    <PackageReference Include="Xabe.FFmpeg" Version="4.3.1" />
     <PackageReference Include="YoutubeDLSharp" Version="0.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ffmpeg-binarys" />
     <Folder Include="mp3" />
     <Folder Include="mp3\" />
     <Folder Include="bin\" />
@@ -32,6 +34,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="user-data\already-downloaded-videos\jonathan.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg\ffmpeg-i686">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg\ffprobe-i686">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg-binarys\ffmpeg-i686">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ffmpeg-binarys\ffprobe-i686">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
